@@ -20,6 +20,7 @@ public class Perro {
         this.edad = 1;
         this.peso = 0.5;
     }
+    
     public String getRaza() {
         return raza;
     }

@@ -19,15 +19,14 @@ public class main {
 
         //===========================================================
         //Actividad 2
-        Diagnostico Max = new Diagnostico();
-        Diagnostico Coco = new Diagnostico(2);
+        Perro Max = new Perro();
+        Diagnostico d0 = new Diagnostico();
 
-        Max.AptoVacunaA();
-        Coco.AptoVacunaA();
+        d0.AptoVacunaB(Max.getEdad(), Max.getTemp(), Max.peso);
 
         //===========================================================
         //Actividad 3
-        Diagnostico Firualais = new Diagnostico();
+        Perro Firualais = new Perro();
         Scanner l = new Scanner (System.in);
 
         System.out.println("Ingrese la nueva temperatura para el perro: ");
@@ -44,6 +43,11 @@ public class main {
         System.out.println("Temperatura:" + Firualais.getTemp());
         System.out.println("Edad:" + Firualais.getEdad());
         System.out.println("Peso:" + Firualais.peso);
-        Firualais.AptoVacunaA();
+        
+        Diagnostico d1 = new Diagnostico();
+        Diagnostico d2 = new Diagnostico();
+        
+        d1.AptoVacunaA(Firualais);
+        d2.AptoVacunaB(Firualais.getEdad(), Firualais.getTemp(), Firualais.peso);
     }
 }
