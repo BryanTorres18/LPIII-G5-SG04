@@ -30,10 +30,17 @@ public class CuentaBanco {
         return "CuentaBanco{" + "titular=" + titular + ", cantidad=" + cantidad + '}';
     }
     
-    public void ingresar(double cantidad){
-        
+    public double ingresar(double cantidad){
+        if(cantidad<0.00)
+            return 0.00;
+        else
+            return cantidad;
     }
-    public void retirar(double cantidad){
-        
+    public double retirar(double cantidad){
+        this.cantidad = this.cantidad - cantidad;
+        if(this.cantidad<=0)
+            return 0;
+        else
+            return this.cantidad;
     }
 }
