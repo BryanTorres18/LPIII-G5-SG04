@@ -5,7 +5,7 @@ public class CuentaBanco {
     private double cantidad;
     public CuentaBanco(String titular){
         this.titular = titular;
-        this.cantidad = 5.00;
+        this.cantidad = 0;
     }
     public CuentaBanco(String titular, double cantidad){
         this.titular = titular;
@@ -14,12 +14,15 @@ public class CuentaBanco {
         else
             this.cantidad = cantidad;
     }
+    //GETS
     public String getTitular(){
         return titular;
     }
     public double getCantidad(){
         return cantidad;
     }
+    
+    //SETS
     public void setTitular(String titular){
         this.titular = titular;
     }
@@ -33,17 +36,17 @@ public class CuentaBanco {
         return "CuentaBanco{" + "titular=" + titular + ", cantidad=" + cantidad + '}';
     }
     
-    public double ingresar(double cantidad){
-        if(cantidad<0.00)
-            return 0.00;
+    public void ingresar(double cantidad){
+        if(cantidad>0)
+            this.cantidad = this.cantidad + cantidad;
         else
-            return cantidad;
+            this.cantidad = this.cantidad + 0;
     }
-    public double retirar(double cantidad){
-        this.cantidad = this.cantidad - cantidad;
-        if(this.cantidad<=0)
-            return 0;
+    
+    public void retirar(double cantidad){
+        if((this.cantidad - cantidad)>0)
+            this.cantidad = 0;
         else
-            return this.cantidad;
+            this.cantidad = this.cantidad - cantidad;
     }
 }
