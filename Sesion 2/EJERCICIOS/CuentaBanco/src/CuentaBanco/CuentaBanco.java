@@ -36,17 +36,19 @@ public class CuentaBanco {
         return "CuentaBanco{" + "titular=" + titular + ", cantidad=" + cantidad + '}';
     }
     
-    public void ingresar(double cantidad){
+    public double ingresar(double cantidad){
         if(cantidad>0)
             this.cantidad = this.cantidad + cantidad;
         else
             this.cantidad = this.cantidad + 0;
+        return this.cantidad;
     }
     
-    public void retirar(double cantidad){
-        if((this.cantidad - cantidad)>0)
+    public double retirar(double cantidad){
+        if((this.cantidad - cantidad)<0)
             this.cantidad = 0;
         else
             this.cantidad = this.cantidad - cantidad;
+        return this.cantidad;
     }
 }
