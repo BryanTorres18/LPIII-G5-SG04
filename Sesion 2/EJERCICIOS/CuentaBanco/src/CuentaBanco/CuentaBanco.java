@@ -7,9 +7,12 @@ public class CuentaBanco {
         this.titular = titular;
         this.cantidad = 5.00;
     }
-    public CuentaBanco(){
-        this.titular = "Grupo_04";
-        this.cantidad = 5.00;
+    public CuentaBanco(String titular, double cantidad){
+        this.titular = titular;
+        if(cantidad<0)
+            this.cantidad = 0;
+        else
+            this.cantidad = cantidad;
     }
     public String getTitular(){
         return titular;
