@@ -1,11 +1,13 @@
 
 package CuentaBanco;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class main {
     public static void main(String[] args) {
         
         Scanner leer = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat(".00");
         
         double x=0;
         int rpt = 4;
@@ -28,15 +30,15 @@ public class main {
             case 1:
                 System.out.println("Ingrese el dinero a ingresar: ");
                 x = leer.nextDouble();
-                System.out.println("Nuevo saldo " + Cuenta.ingresar(x));
+                System.out.println("Nuevo saldo " + df.format(Cuenta.ingresar(x)));
                 break;
             case 2:
                 System.out.println("Ingrese el dinero a retirar: ");
                 x = leer.nextDouble();
-                System.out.println("Nuevo saldo " + Cuenta.retirar(x));
+                System.out.println("Nuevo saldo " + df.format(Cuenta.retirar(x)));
                 break;
             case 3:
-                System.out.println("Este es su saldo: "+ Cuenta.getCantidad());
+                System.out.println("Este es su saldo: "+ df.format(Cuenta.getCantidad()));
                 break;
             default:
                 System.out.println("Numero incorrecto");
