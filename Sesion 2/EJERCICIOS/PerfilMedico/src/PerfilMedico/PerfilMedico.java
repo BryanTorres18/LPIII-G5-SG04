@@ -1,5 +1,8 @@
 package PerfilMedico;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class PerfilMedico {
     private String primer_nombre;
     private String apellido;
@@ -7,8 +10,9 @@ public class PerfilMedico {
     private int dia, mes, anio;
     private int altura;
     private double peso;
+    private int edad;
     
-    //CONSTRUCTOR
+    //CONSTRUCTORES
     
     public PerfilMedico(String primer_nombre, String apellido, String sexo,
             int dia, int mes, int anio, int altura, double peso){
@@ -20,6 +24,9 @@ public class PerfilMedico {
         this.anio=anio;
         this.altura=altura;
         this.peso=peso;
+    }
+    public PerfilMedico(){
+
     }
     
     //GETS
@@ -66,7 +73,7 @@ public class PerfilMedico {
     public void setMes(int mes){
         this.mes = mes;
     }
-    public void setSexo(int anio){
+    public void setAnio(int anio){
         this.anio = anio;
     }
     public void setAltura(int altura){
@@ -75,4 +82,39 @@ public class PerfilMedico {
     public void setPeso(double peso){
         this.peso = peso;
     }
+
+    public int edadActual()
+    {
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy");
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("MM");
+        DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("dd");
+        edad = Integer.parseInt(dtf1.format(LocalDateTime.now())) - anio;
+        if(mes > Integer.parseInt(dtf2.format(LocalDateTime.now())))
+        {
+            edad = edad - 1;
+        }
+        else
+        {
+            if(mes == Integer.parseInt(dtf2.format(LocalDateTime.now())))
+            {
+                if(dia == Integer.parseInt(dtf3.format(LocalDateTime.now())))
+                {
+                    edad = edad - 1;
+                }
+            }
+        }
+        return edad;
+    }
+
+    public double FCM()
+    {
+        return 208 - (0.7 * edadActual());
+    }
+
+    public double IMC()
+    {
+        return peso / altura;
+    }
+
+
 }
