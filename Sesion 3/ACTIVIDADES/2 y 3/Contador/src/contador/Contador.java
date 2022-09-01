@@ -1,7 +1,7 @@
 package contador;
 
 public class Contador {
-    static int acumulador = 0;
+    private static int acumulador = 0;
     private int valor;
     
     public static int acumulador()
