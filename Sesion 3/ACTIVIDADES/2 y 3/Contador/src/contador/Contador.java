@@ -17,7 +17,7 @@ public class Contador {
     
     public void inc()
     {
-        this.valor++;
+        valor++;
         acumulador++;
     }
     
