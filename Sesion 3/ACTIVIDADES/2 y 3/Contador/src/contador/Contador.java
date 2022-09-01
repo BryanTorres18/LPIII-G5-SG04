@@ -12,12 +12,12 @@ public class Contador {
     public Contador(int valor)
     {
         this.valor = valor;
-        Contador.acumulador += valor;
+        acumulador += valor;
     }
     
     public void inc()
     {
-        valor++;
+        this.valor++;
         acumulador++;
     }
     
