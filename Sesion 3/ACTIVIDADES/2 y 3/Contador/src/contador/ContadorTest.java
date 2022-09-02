@@ -5,7 +5,6 @@ public class ContadorTest {
     public static void main(String[] args)
     {
         Contador c1, c2;
-        
         System.out.println(Contador.acumulador());
         c1 = new Contador(3);
         c2 = new Contador(10);
@@ -17,3 +16,5 @@ public class ContadorTest {
         System.out.println(Contador.acumulador());
     }
 }
+
+

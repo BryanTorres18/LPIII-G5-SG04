@@ -1,29 +1,31 @@
 package contador;
 
-public class Contador {
-    private static int acumulador = 0;
+public class Contador{
+    static int acumulador = 0;
+    static final int VALORINICIAL = 10;
     private int valor;
     
-    public static int acumulador()
-    {
+    public static int acumulador(){
         return acumulador;
     }
     
-    public Contador(int valor)
-    {
+    public Contador(int valor){
         this.valor = valor;
         acumulador += valor;
     }
-    
-    public void inc()
-    {
+    public Contador(){
+        this(Contador.VALORINICIAL);
+    }
+    public void inc(){
         valor++;
         acumulador++;
     }
     
-    public int getValor()
-    {
+    public int getValor(){
         return this.valor;
     }
     
 }
+
+
+
