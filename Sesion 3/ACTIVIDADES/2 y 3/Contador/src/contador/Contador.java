@@ -17,13 +17,16 @@ public class Contador{
         nContadores++;
         ultimoContador = valor;
     }
+    
     public Contador(){
-        this(Contador.VALORINICIAL);
+        new Contador(Contador.VALORINICIAL);
     }
+    
     public void inc(){
         valor++;
         acumulador++;
     }
+    
     
     public int getValor(){
         return this.valor;
