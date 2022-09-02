@@ -2,8 +2,10 @@ package contador;
 
 public class Contador{
     static int acumulador = 0;
-    static final int VALORINICIAL = 10;
+    final static int VALORINICIAL = 10;
     private int valor;
+    static int nContadores = 0;
+    static int ultimoContador = 0;
     
     public static int acumulador(){
         return acumulador;
@@ -12,6 +14,8 @@ public class Contador{
     public Contador(int valor){
         this.valor = valor;
         acumulador += valor;
+        nContadores++;
+        ultimoContador = valor;
     }
     public Contador(){
         this(Contador.VALORINICIAL);
@@ -24,7 +28,7 @@ public class Contador{
     public int getValor(){
         return this.valor;
     }
-    
+
 }
 
 
