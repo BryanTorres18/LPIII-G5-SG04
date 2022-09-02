@@ -1,4 +1,3 @@
-
 package contador;
 
 public class ContadorTest {
