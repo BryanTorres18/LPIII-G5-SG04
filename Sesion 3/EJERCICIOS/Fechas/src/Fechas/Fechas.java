@@ -142,10 +142,12 @@ public class Fechas {
             if (this.mes == 12) {
                 this.mes = 1;
                 this.anio++;
-            } else {
+            } 
+            else{
                 this.mes++;
             }
-        } else {
+        } 
+        else{
             this.dia++;
         }
     }
@@ -156,11 +158,13 @@ public class Fechas {
                 this.dia = 31;
                 this.mes = 12;
                 this.anio--;
-            } else {
+            } 
+            else{
                 this.dia = 31;
                 this.mes--;
             }
-        } else {
+        } 
+        else{
             this.dia--;
         }
     }
