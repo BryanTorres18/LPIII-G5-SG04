@@ -8,6 +8,7 @@ public class Fechas {
     private int dia;
     private int mes;
     private int anio;
+    protected int[] diasPorMes = {31,28,31,30,31,30,31,31,30,31,30,31};
     Scanner l = new Scanner(System.in);
 
     //CONSTRUCTORES
@@ -39,37 +40,63 @@ public class Fechas {
         valida();
         
     }
+    public boolean bisiesto(){
+        return this.bisiesto(this.anio);
+    }
     
-    public void bisiesto(){
+    public boolean bisiesto(int anio){
+        boolean x = true;
+        boolean y = false;
         if(anio % 4 == 0){
             System.out.println("SI es un año bisiesto");
+            return x;
         }
         else{
-            System.out.println("NO es un año bsiesto");
+            System.out.println("NO es un año bisiesto");
+            return y;
         }
     }
     
+    public int diasMes(int mes) {
+        int dias = diasPorMes[mes - 1];
+        if (bisiesto() && mes == 2){
+            dias++;
+        }
+        return dias; 
+    }
+    
     private void valida(){
-        if(dia>=1 && dia<=31){
-            if(mes>=1 && mes<=12){
-                if(anio>=1900 && anio<=2050){
+        if(this.dia>=1 && this.dia<=31){
+            if(this.mes>=1 && this.mes<=12){
+                if(this.anio>=1900 && this.anio<=2050){
                     System.out.println("La fecha es correcta");
-                    System.out.println(this.dia+"-"+this.mes+"-"+this.anio);
                 }
                 else{
                     this.anio=1900;
-                    System.out.println("El año es incorrecto: "+this.anio);
                 }
             }
             else{
                 this.mes=1;
-                System.out.println("El mes es incorrecto: "+this.mes);
             }
         }
         else{
             this.dia=1;
-            System.out.println("El dia es incorrecto: "+this.dia);
         }
+        if(!(this.dia>=1 && this.dia<=31)){
+            this.dia=1;
+        }    
+        if(!(this.mes>0 && this.mes<=12)){
+            this.dia=1;
+        } 
+        if(!(this.anio>=1900 && this.anio<=2050)){
+            this.anio=1900;
+        } 
+    }
+    
+     public String corta() {
+        String imprimir = this.dia+"-"+this.mes+"-"+this.anio;
+        System.out.println(imprimir);
+        return imprimir;
     }
     
 
