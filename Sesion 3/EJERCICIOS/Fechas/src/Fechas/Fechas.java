@@ -66,22 +66,6 @@ public class Fechas {
     }
     
     private void valida(){
-        if(this.dia>=1 && this.dia<=31){
-            if(this.mes>=1 && this.mes<=12){
-                if(this.anio>=1900 && this.anio<=2050){
-                    System.out.println("La fecha es correcta");
-                }
-                else{
-                    this.anio=1900;
-                }
-            }
-            else{
-                this.mes=1;
-            }
-        }
-        else{
-            this.dia=1;
-        }
         if(!(this.dia>=1 && this.dia<=31)){
             this.dia=1;
         }    
@@ -93,11 +77,10 @@ public class Fechas {
         } 
     }
     
-     public String corta() {
-        String imprimir = this.dia+"-"+this.mes+"-"+this.anio;
-        System.out.println(imprimir);
-        return imprimir;
+     public void corta() {
+        System.out.println(this.dia+"-"+this.mes+"-"+this.anio);
     }
     
+     
 
 }
