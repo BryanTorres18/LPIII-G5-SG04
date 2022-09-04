@@ -14,6 +14,8 @@ public class Principal {
         
         manejador.desplazar_x(2,6);
         manejador.desplazar_y(5, 8);
+
+        System.out.println(rect1.getColor());
     }
     
 }
