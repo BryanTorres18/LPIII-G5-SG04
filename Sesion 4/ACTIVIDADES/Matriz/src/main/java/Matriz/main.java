@@ -1,4 +1,4 @@
-package Matriz;
+package matriz;
 import java.util.*;
 
 public class main {
@@ -8,7 +8,7 @@ public class main {
         int matriz[][] = new int[4][4];
         
         boolean salir = false;
-        int opcion, fila;
+        int opcion, fila, columna;
         
         boolean rellenado = false;
         
@@ -16,7 +16,9 @@ public class main {
             System.out.println("Menu");
             System.out.println("1. Rellenar Matrix");
             System.out.println("2. Sumar fila");
-            System.out.println("3. Salir");
+            System.out.println("3. Sumar columna");
+            System.out.println("4. Suma de diagonal");
+            System.out.println("5. Salir");
             System.out.println("Elije una opcion");
             opcion = sn.nextInt();
             
@@ -37,6 +39,19 @@ public class main {
                     }
                     break;
                 case 3:
+                    if (rellenado){
+                        do{
+                            System.out.println("Elije una columna");
+                            columna = sn.nextInt();
+                        } while (!(columna >= 0 && columna < matriz.length));
+                        System.out.println("La suma de los valores de la columna " + columna + " es: " +sumaColumna(matriz, columna));
+                    } else{
+                        System.out.println("Debe rellenar la matriz primero");
+                    }
+                    break;
+                case 4:
+                    System.out.println("La suma de la diagonal principal es: " + sumaDiagonal(sn, matriz));
+                case 5:
                     salir = true;
                     break;
                 default:
@@ -61,6 +76,24 @@ public class main {
         
         for (int j = 0; j < matriz.length; j++){
             suma += matriz[fila][j];
+        }
+        return suma;
+    }
+    
+    public static int sumaColumna(int[][] matriz, int columna){
+        int suma = 0;
+        
+        for (int i = 0; i < matriz.length; i++){
+            suma += matriz[i][columna];
+        }
+        return suma;
+    }
+    
+    public static int sumaDiagonal(Scanner sn, int[][] matriz){
+        int suma = 0;
+        
+        for (int i = 0; i < matriz.length; i++){
+            suma += matriz[i][i];
         }
         return suma;
     }
