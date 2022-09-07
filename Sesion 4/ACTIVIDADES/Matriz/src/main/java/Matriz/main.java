@@ -119,7 +119,7 @@ public class main {
     }
     public static int sumaTotal(int[][] matriz){
         int suma= 0;
-        for(int i=0;i<4;i++){
+        for(int i=0;i<matriz.length;i++){
             suma += sumaFila(matriz, i);
         }
         return suma;
