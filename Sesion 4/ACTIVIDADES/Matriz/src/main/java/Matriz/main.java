@@ -118,12 +118,10 @@ public class main {
         return suma;
     }
     public static int sumaTotal(int[][] matriz){
-        int suma1 = 0;
-        int suma2= 0;
+        int suma= 0;
         for(int i=0;i<4;i++){
-            suma1 += sumaColumna(matriz, i);
-            suma2 += sumaFila(matriz, i);
+            suma += sumaFila(matriz, i);
         }
-        return suma1 + suma2;
+        return suma;
     }
 }
