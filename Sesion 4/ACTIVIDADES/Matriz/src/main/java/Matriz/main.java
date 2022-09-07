@@ -64,7 +64,7 @@ public class main {
                     salir = true;
                     break;
                 default:
-                    System.out.println("Tiene que meter un valor entre 1 y 3");
+                    System.out.println("Tiene que meter un valor entre 1 y 7");
             }
         } while (!salir);
 
