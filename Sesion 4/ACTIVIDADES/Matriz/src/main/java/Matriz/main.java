@@ -1,4 +1,4 @@
-package matriz;
+package Matriz;
 import java.util.*;
 
 public class main {
@@ -18,11 +18,13 @@ public class main {
             System.out.println("2. Sumar fila");
             System.out.println("3. Sumar columna");
             System.out.println("4. Suma de diagonal");
-            System.out.println("5. Salir");
+            System.out.println("5. Suma de diagonal inversa");
+            System.out.println("6. Suma todos los valores");
+            System.out.println("7. Salir");
             System.out.println("Elije una opcion");
             opcion = sn.nextInt();
             
-            switch (opcion){
+            switch(opcion){
                 case 1:
                     rellenarMatriz(sn, matriz);
                     rellenado = true;
@@ -51,7 +53,14 @@ public class main {
                     break;
                 case 4:
                     System.out.println("La suma de la diagonal principal es: " + sumaDiagonal(sn, matriz));
+                    break;
                 case 5:
+                    System.out.println("La suma de la diagonal inversa es: " + sumaInversa(sn, matriz));
+                    break;
+                case 6:
+                    System.out.println("La suma de todos los valores de la matriz es: " + sumaTotal(sn, matriz));
+                    break;
+                case 7:
                     salir = true;
                     break;
                 default:
@@ -82,8 +91,8 @@ public class main {
     
     public static int sumaColumna(int[][] matriz, int columna){
         int suma = 0;
-        
-        for (int i = 0; i < matriz.length; i++){
+        int x = matriz.length;
+        for(int i = 0; i < x; i++){
             suma += matriz[i][columna];
         }
         return suma;
@@ -96,5 +105,26 @@ public class main {
             suma += matriz[i][i];
         }
         return suma;
+    }
+    
+    public static int sumaInversa(Scanner sn, int[][] matriz){
+        int x = 0;
+        int y = matriz.length;
+        int suma = 0;
+        while(x < matriz.length && y - 1 >= 0){
+            suma += matriz[y][x];
+            x++;
+            y--;
+        }
+        return suma;
+    }
+    public static int sumaTotal(Scanner sn, int[][] matriz){
+        int suma1 = 0;
+        int suma2= 0;
+        for(int i=0;i<4;i++){
+            suma1 += sumaColumna(matriz, i);
+            suma2 += sumaFila(matriz, i);
+        }
+        return suma1 + suma2;
     }
 }
