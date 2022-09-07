@@ -177,7 +177,7 @@ public class Fechas {
         larga();
     }
     public Fechas copia() {
-	return new Fechas(this.dia, this.mes, this.anio);
+	    return new Fechas(this.dia, this.mes, this.anio);
     }
     
     public boolean igualQue(Fechas f1, Fechas f2) {
