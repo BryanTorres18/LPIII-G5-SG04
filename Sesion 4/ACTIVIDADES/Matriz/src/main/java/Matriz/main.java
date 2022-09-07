@@ -4,14 +4,14 @@ import java.util.*;
 public class main {
     public static void main(String[] args){
         Scanner sn = new Scanner(System.in);
-        
-        int matriz[][] = new int[4][4];
-        
+
+        int[][] matriz = new int[4][4];
+
         boolean salir = false;
         int opcion, fila, columna;
-        
+
         boolean rellenado = false;
-        
+
         do{
             System.out.println("Menu");
             System.out.println("1. Rellenar Matrix");
@@ -23,7 +23,7 @@ public class main {
             System.out.println("7. Salir");
             System.out.println("Elije una opcion");
             opcion = sn.nextInt();
-            
+
             switch(opcion){
                 case 1:
                     rellenarMatriz(sn, matriz);
@@ -52,13 +52,13 @@ public class main {
                     }
                     break;
                 case 4:
-                    System.out.println("La suma de la diagonal principal es: " + sumaDiagonal(sn, matriz));
+                    System.out.println("La suma de la diagonal principal es: " + sumaDiagonal(matriz));
                     break;
                 case 5:
-                    System.out.println("La suma de la diagonal inversa es: " + sumaInversa(sn, matriz));
+                    System.out.println("La suma de la diagonal inversa es: " + sumaInversa(matriz));
                     break;
                 case 6:
-                    System.out.println("La suma de todos los valores de la matriz es: " + sumaTotal(sn, matriz));
+                    System.out.println("La suma de todos los valores de la matriz es: " + sumaTotal(matriz));
                     break;
                 case 7:
                     salir = true;
@@ -67,7 +67,7 @@ public class main {
                     System.out.println("Tiene que meter un valor entre 1 y 3");
             }
         } while (!salir);
-        
+
         System.out.println("FIN");
     }
     //===============================
@@ -79,46 +79,45 @@ public class main {
             }
         }
     }
-    
+
     public static int sumaFila(int[][] matriz, int fila){
         int suma = 0;
-        
+
         for (int j = 0; j < matriz.length; j++){
             suma += matriz[fila][j];
         }
         return suma;
     }
-    
+
     public static int sumaColumna(int[][] matriz, int columna){
         int suma = 0;
-        int x = matriz.length;
-        for(int i = 0; i < x; i++){
-            suma += matriz[i][columna];
+        for (int[] ints : matriz) {
+            suma += ints[columna];
         }
         return suma;
     }
-    
-    public static int sumaDiagonal(Scanner sn, int[][] matriz){
+
+    public static int sumaDiagonal(int[][] matriz){
         int suma = 0;
-        
+
         for (int i = 0; i < matriz.length; i++){
             suma += matriz[i][i];
         }
         return suma;
     }
-    
-    public static int sumaInversa(Scanner sn, int[][] matriz){
+
+    public static int sumaInversa(int[][] matriz){
         int x = 0;
         int y = matriz.length;
         int suma = 0;
-        while(x < matriz.length && y - 1 >= 0){
+        while(x < matriz.length){
             suma += matriz[y][x];
             x++;
             y--;
         }
         return suma;
     }
-    public static int sumaTotal(Scanner sn, int[][] matriz){
+    public static int sumaTotal(int[][] matriz){
         int suma1 = 0;
         int suma2= 0;
         for(int i=0;i<4;i++){
