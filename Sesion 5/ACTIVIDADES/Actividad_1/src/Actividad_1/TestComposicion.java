@@ -1,8 +1,6 @@
 package Actividad_1;
-import java.util.*;
 public class TestComposicion {
     public static void main(String[] args){
-        Scanner leer = new Scanner(System.in);
         Persona p1 = new Persona(1234,"Carlos","Avila");
         Persona p2 = new Persona(7845,"Bryan","Torres");
         System.out.println("CARLOS: Cuenta y Saldo actual: ");
