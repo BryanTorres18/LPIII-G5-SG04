@@ -17,17 +17,26 @@ public class Banco {
 
      //METODOS
     public void agregarCliente(Persona persona){
-        System.out.println("CLIENTE AGREGADO");
-        this.
+        System.out.println("AGREGANDO CLIENTE...");
+        int i;
+        for(i=0;i < clientes.length; i++){
+            if(clientes[i]==null){
+                clientes[i]= new Persona(persona.getId(), persona.getNombre(), persona.getApellido());
+                System.out.println(clientes[i].getNombre() +"AGREGADA");
+            }
+        }
+        
     }
     public Persona darBajaCliente(Persona persona){
-        for(int i=0;i<=clientes.length;i++){
-            if(clientes[i]==){
-                
+        System.out.println("ELIMINAR CLIENTE...");
+        int i;
+        
+        for(i=0;i < clientes.length; i++){
+            if(buscarCliente(persona)==true){
+                System.out.println("USUARIO ELIMINADO...");
+                return clientes[i]=null;
+            }
         }
-    }
-    
-    public void clientesTipo(char tipo){
         
     }
 
