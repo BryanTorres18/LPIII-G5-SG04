@@ -3,6 +3,7 @@ package Ejercicio_2;
 public class Motor {
     private int numMotor;
     private int revPorMin;
+    private Automovil automovil;
     
     public Motor(int numMotor, int revPorMin)
     {
@@ -31,9 +32,6 @@ public class Motor {
     //ToString
     @Override
     public String toString() {
-        return "Motor{" + "numMotor=" + numMotor + ", revPorMin=" + revPorMin + '}';
+        return "\nNumMotor      : " + numMotor + "\nRevPorMin       : " + revPorMin;
     }
-    
-    
-    
 }

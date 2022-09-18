@@ -7,7 +7,7 @@ public class Automovil {
     private String marca;
     private String modelo;
     private Motor motor;
-
+    
     public Automovil(String placa, int nPuertas, String marca, String modelo) {
         this.placa = placa;
         this.numPuertas = nPuertas;
@@ -60,7 +60,13 @@ public class Automovil {
     //ToString
     @Override
     public String toString() {
-        return "Automovil{" + "placa=" + placa + ", numPuertas=" + numPuertas + ", marca=" + marca + ", modelo=" + modelo + ", motor=" + motor + '}';
+        if(motor==null){
+            return "Automovil sin motor \nPlaca      : " + placa + "\nNo.Puertas      : " + numPuertas + "\nMarca       : " + marca + "\nModelo      : " + modelo +"\n";
+        }
+        else{
+            return "Automovil con motor \nPlaca      : " + placa + "\nNo.Puertas      : " + numPuertas + "\nMarca       : " + marca + "\nModelo      : " + modelo + motor.toString()+"\n";
+        }
+        
     }
     
     
