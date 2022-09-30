@@ -1,6 +1,7 @@
 package Ejercicio_1;
 
-public class FiguraBidimensional {
+class FiguraBidimensional extends Figura{
+
     private double base;
     private double altura;
     private double radio;
@@ -17,6 +18,7 @@ public class FiguraBidimensional {
 
     public double getBase() {
         return base;
+        
     }
 
     public double getRadio() {
@@ -38,5 +40,18 @@ public class FiguraBidimensional {
     public void setRadio(double radio) {
         this.radio = radio;
     }
+
+    @Override
+    public void getArea() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public void getVolumen() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+    
+    
+    
     
 }
