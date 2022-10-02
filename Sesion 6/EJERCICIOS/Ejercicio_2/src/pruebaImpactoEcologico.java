@@ -14,7 +14,10 @@ public class pruebaImpactoEcologico {
         lista.add(b1);
 
         for (ImpactoEcologico impactoEcologico : lista) {
-            System.out.println("Impacto ecologico: " + impactoEcologico.obtenerImpactoEcologico());
+            System.out.println(impactoEcologico);
+            System.out.println("=================================================================");
+            System.out.println("Impacto ecologico: " + impactoEcologico.obtenerImpactoEcologico() + " GEI");
+            System.out.println("=================================================================");
         }
     }
 }

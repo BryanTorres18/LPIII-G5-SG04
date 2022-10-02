@@ -77,7 +77,6 @@ public class Auto implements ImpactoEcologico {
                 "\nMarca: " + marca +
                 "\nModelo: " + modelo +
                 "\nTiempo de Uso(Años):" + tiempodeVida +
-                "\n================================================" +
                 "\nDatos de Actividad: " +
                 "\nFactor de Emision: " + factordeEmision +
                 "\nGasolina Usada por Dia: " + gasolinausadaxdia +

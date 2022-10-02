@@ -89,7 +89,6 @@ public class Edificio implements ImpactoEcologico {
                 "\nCantidad de Cuartos: " + cantCuartos +
                 "\nCantidad de Habitantes:" + cantHabitantes +
                 "\nAños de Funcionamiento:" + aniodeFuncionamiento +
-                "\n================================================" +
                 "\nDatos de Actividad: " +
                 "\nFactor de Emision: " + factordeEmision +
                 "\nKilovatios por Dia: " + kWxdia +

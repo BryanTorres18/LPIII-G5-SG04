@@ -58,7 +58,7 @@ public class Bicicleta implements ImpactoEcologico{
 
     @Override
     public double obtenerImpactoEcologico() {
-        return 0 ;
+        return (usodePlasticos + contaminacionporinportacion) * factordeEmision;
     }
 
     @Override
@@ -66,7 +66,6 @@ public class Bicicleta implements ImpactoEcologico{
         return "Bicicleta:" +
                 "\nTipo de Bicicleta: " + tipo +
                 "\nPersona Destinada: " + tipo_persona +
-                "\n================================================" +
                 "\nDatos de Actividad: " +
                 "\nFactor de Emision: " + factordeEmision +
                 "\nContaminacion por inportacion de la bicicleta: " + contaminacionporinportacion +
