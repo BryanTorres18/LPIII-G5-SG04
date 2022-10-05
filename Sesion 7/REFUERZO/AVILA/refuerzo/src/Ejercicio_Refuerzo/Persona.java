@@ -1,20 +1,21 @@
 package Ejercicio_Refuerzo;
 
 public class Persona {
-    private final int PESO_MAX;
+    
     private final int peso;
     private int personas;
-
+    //CONSTRUCTOR
     public Persona(int personas) {
         peso = 50;
-        PESO_MAX = 750;
         this.personas = personas;
     }
 
-    public int getPESO_MAX() {
-        return PESO_MAX;
+    //GET DE peso
+    public int getPeso() {
+        return peso;
     }
 
+    //GET SET DE personas
     public int getPersonas() {
         return personas;
     }
@@ -22,10 +23,5 @@ public class Persona {
     public void setPersonas(int personas) {
         this.personas = personas;
     }
-
-    public int getPeso() {
-        return peso;
-    }
-    
     
 }
