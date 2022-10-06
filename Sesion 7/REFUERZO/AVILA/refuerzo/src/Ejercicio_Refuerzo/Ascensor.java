@@ -100,7 +100,7 @@ public class Ascensor {
 
     public void validacion_peso(Persona personas) throws Exception {
         if (persona.getPersonas() * persona.getPeso() > PESO_MAX) {
-            throw new Exception(" -> PESO MAXIMO");
+            throw new Exception(" -> PESO MAXIMO (MAXIMO 15 PERSONAS)");
         }
     }
 
