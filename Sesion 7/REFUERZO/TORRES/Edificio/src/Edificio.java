@@ -6,6 +6,7 @@ public class Edificio {
     Elevador elevador;
 
     public Edificio() {
+        this.elevador = new Elevador();
     }
 
     public void ingresarPisos()

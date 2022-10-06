@@ -9,8 +9,10 @@ public class pruebaEdificio {
         int personas;
         Edificio edificio = new Edificio();
 
+        edificio.ingresarPisos();
+
         do{
-            edificio.ingresarPisos();
+
             System.out.println("""
                     ==========================
                             BIENVENIDO     \s
