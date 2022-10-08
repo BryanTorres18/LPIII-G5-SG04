@@ -62,11 +62,10 @@ public class Ascensor {
     }
 
     //METODOS
-    
     //////////////////////////////////SUBIR Y BAJAR//////////////////////////////////
     public void subir() throws Exception {
         try {
-            Ascensor.this.comprobacion_pisoDestino(pisoDestino);
+            Ascensor.this.comprobacion_pisoDestinoSubir(pisoDestino);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -74,7 +73,7 @@ public class Ascensor {
 
     public void bajar() throws Exception {
         try {
-            Ascensor.this.comprobacion_pisoDestino(pisoDestino);
+            Ascensor.this.comprobacion_pisoDestinoBajar(pisoDestino);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -130,8 +129,10 @@ public class Ascensor {
             this.getPisoFinal();
         }
     }
+
     //////////////////////////////////COMPROBAR Y VALIDAR PISO DESTINO //////////////////////////////////
-    public void comprobacion_pisoDestino(int pisoDestino) throws Exception {
+
+    public void comprobacion_pisoDestinoSubir(int pisoDestino) throws Exception {
         if (this.getPisoActual() == pisoDestino) {
             throw new Exception(" -> ESTAMOS EN ESE PISO");
         }
@@ -144,6 +145,32 @@ public class Ascensor {
                 throw new Exception(" -> NO HAY PISOS MAS ABAJO");
             }
         }
+        if(this.getPisoActual()>pisoDestino){
+            throw new Exception(" -> NO PUEDES SUBIR A PISOS INFERIORES");
+        }
         setPisoActual(pisoDestino);
     }
+    
+    public void comprobacion_pisoDestinoBajar(int pisoDestino) throws Exception {
+        if (this.getPisoActual() == pisoDestino) {
+            throw new Exception(" -> ESTAMOS EN ESE PISO");
+        }
+
+        if (pisoDestino > this.getPisoFinal()) {
+            throw new Exception(" -> NO HAY PISOS MAS ARRIBA");
+        }
+        if (this.getPisoActual() == 1) {
+            if (pisoDestino < this.getPisoActual()) {
+                throw new Exception(" -> NO HAY PISOS MAS ABAJO");
+            }
+        }
+        if(pisoDestino<1){
+            throw new Exception(" -> NO HAY PISOS MAS ABAJO");
+        }
+        if(this.getPisoActual()<pisoDestino){
+            throw new Exception(" -> NO PUEDES BAJAR A PISOS SUPERIORES");
+        }
+        setPisoActual(pisoDestino);
+    }
+
 }
