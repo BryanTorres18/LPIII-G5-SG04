@@ -22,8 +22,8 @@ public class main {
         
         while (opcion != 3) {
             System.out.println("=================== SELECCIONE UNA OPCION ===================");
-            System.out.println("Piso Maximo: " + ascensor.getPisoFinal());
-            System.out.println("Piso Actual: " + ascensor.getPisoActual());
+            System.out.println("Piso Maximo: " + edificio.ascensor.getPisoFinal());
+            System.out.println("Piso Actual: " + edificio.ascensor.getPisoActual());
             System.out.println("1) Subir piso");
             System.out.println("2) Bajar piso");
             System.out.println("3) Salir");
