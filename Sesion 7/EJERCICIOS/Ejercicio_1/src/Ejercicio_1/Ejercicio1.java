@@ -10,14 +10,18 @@ public class Ejercicio1 {
     }
 
     public static double acceso(double[] v, int j) throws Exception {   //asignamos parametros a nuestra funcion "acceso" la cual agregamos la clase Exception
-        try {           //inicializamos nuestro try - catch
-            if (j >= 0 && j <= v.length) {      //siendo en este caso -> si 16 es MAYOR IGUAL a 0 Y si 16 es MENOR IGUAL a 15 retorna una nueva cantidad de espacios en el array de v;
+        try {           
+        //inicializamos nuestro try - catch
+            if (j >= 0 && j <= v.length) {      
+                //siendo en este caso -> si 16 es MAYOR IGUAL a 0 Y si 16 es MENOR IGUAL a 15 retorna una nueva cantidad de espacios en el array de v;
                 //Siendo en este caso incorrecto y estaria pasando en el "else" que es
                 return v[j];
             } else {
-                throw new Exception("El indice " + j + " No existe en el vector "); //Lanzara una exception donde dira que "El indice 16 No existe en el vector" siendo, luego de esto lanza el catch
+                //Lanzara una exception donde dira que "El indice 16 No existe en el vector" siendo, luego de esto lanza el catch
+                throw new Exception("El indice " + j + " No existe en el vector "); 
             }
-        } catch (RuntimeException exc) { //Al lanzar esto "RuntimeException" es una subclase de Exception, donde este construye una nueva excepción de tiempo de ejecución con null y tambien
+        } catch (RuntimeException exc) { 
+            //Al lanzar esto "RuntimeException" es una subclase de Exception, donde este construye una nueva excepción de tiempo de ejecución con null y tambien
             //por el acceso fuera de los limites de una array
             throw exc;
         }
@@ -45,7 +49,7 @@ public class Ejercicio1 {
         }
     }
 }
- */
+*/
 //PARTE 3
 
 public class Ejercicio1 {
