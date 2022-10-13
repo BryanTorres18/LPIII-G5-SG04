@@ -15,7 +15,7 @@ public class App {
        int denominador = explorador.nextInt();
        
        int resultado = cociente(numerador, denominador);
-       System.out.println("\nResultado: %d/%d = %d\n", numerador, denominador, resultado);
+       System.out.printf("\nResultado: %d/%d = %d\n", numerador, denominador, resultado);
    } 
 }
 
