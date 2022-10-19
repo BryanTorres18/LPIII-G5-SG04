@@ -22,7 +22,7 @@ public class MarcoDemoTeclas extends JFrame implements KeyListener {
         areaTexto = new JTextArea(10, 15); // establece el objeto JTextArea 
         areaTexto.setText("Oprima cualquier tecla en el teclado...");
         areaTexto.setEnabled(false);
-        areaTexto.setDisabledTextColor(Color.black);
+        areaTexto.setDisabledTextColor(Color.BLACK);
         add(areaTexto); // agrega el área de texto a JFrame
         addKeyListener(this); // permite al marco procesar los eventos de teclas
     }
@@ -34,14 +34,17 @@ public class MarcoDemoTeclas extends JFrame implements KeyListener {
         String y = "F1", z = "F2";
   
         if (x == y) {
-            areaTexto.setDisabledTextColor(Color.WHITE);
+            areaTexto.setBackground(Color.WHITE);
+            //areaTexto.setDisabledTextColor(Color.WHITE);
             linea1 = String.format("Tecla oprimida ACCION: " + x);
             establecerLineas2y3(evento);
         } else if (x == z) {
-            areaTexto.setDisabledTextColor(Color.YELLOW);
+            areaTexto.setBackground(Color.YELLOW);
+            //areaTexto.setDisabledTextColor(Color.YELLOW);
             linea1 = String.format("Tecla oprimida ACCION: " + x);
             establecerLineas2y3(evento);
         } else {
+            areaTexto.setBackground(Color.WHITE);
             areaTexto.setDisabledTextColor(Color.BLACK);
             linea1 = String.format("Tecla oprimida ACCION: " + x);
             establecerLineas2y3(evento); // establece las líneas de salida dos y tres
@@ -62,18 +65,22 @@ public class MarcoDemoTeclas extends JFrame implements KeyListener {
         char x, y = 'r', z = 'v';
         x = evento.getKeyChar();
         if (x == y) {
-            areaTexto.setDisabledTextColor(Color.RED);
+            areaTexto.setBackground(Color.RED);
+            //areaTexto.setDisabledTextColor(Color.RED);
             linea1 = String.format("Tecla oprimida NO ACCION: " + x);
             establecerLineas2y3(evento);
         } else if (x == z) {
-            areaTexto.setDisabledTextColor(Color.GREEN);
+            areaTexto.setBackground(Color.GREEN);
+            //areaTexto.setDisabledTextColor(Color.GREEN);
             linea1 = String.format("Tecla oprimida NO ACCION: " + x);
             establecerLineas2y3(evento);
         }else if(x == '/'){
+            //areaTexto.setBackground(Color.WHITE);
             String cadena = "";
             cadena = String.format("No hay color");
             JOptionPane.showMessageDialog(null, cadena);
         }else {
+            areaTexto.setBackground(Color.WHITE);
             areaTexto.setDisabledTextColor(Color.BLACK);
             linea1 = String.format("Tecla oprimida NO ACCION: " + x);
             establecerLineas2y3(evento); // establece las líneas de salida dos y tres
