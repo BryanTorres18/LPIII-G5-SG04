@@ -1,16 +1,16 @@
 // Fig. 12.41: MarcoBorderLayout.java
 // BorderLayout que contiene cinco botones.
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.*;
 
 public class MarcoBorderLayout extends JFrame implements ActionListener {
     private final JButton botones[]; // arreglo de botones para ocultar porciones
-    private static final String nombres[] = {"Ocultar Norte", "Ocultar Sur",
-            "Ocultar Este", "Ocultar Oeste", "Ocultar Centro"};
+    private static  String nombres[] = {"Rojo", "Azul",
+            "Verde", "Amarillo", "Gris"};
+    private static Color[] colores =  {Color.red, Color.blue, Color.green, Color.yellow, Color.gray};
     private final BorderLayout esquema;
 
     // establece la GUI y el manejo de eventos
@@ -38,11 +38,27 @@ public class MarcoBorderLayout extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evento) {
         // comprueba el origen del evento y distribuye el panel de contenido de manera acorde
-        for (JButton boton : botones) {
-            if (evento.getSource() == boton)
-                boton.setVisible(false); // oculta el botón oprimido
-            else
-                boton.setVisible(true); // muestra los demás botones
+        for(int i = 0; i < botones.length; i++){
+            if(evento.getSource() == botones[i]){
+                if(botones[i] == botones[4])
+                    JOptionPane.showMessageDialog(null, "No nuestra color");
+                else{
+                    getContentPane().setBackground(colores[i]);
+                    Color color_1 = colores[i];
+                    String nombre_1 = botones[i].getText();
+                    Color centro = colores[4];
+                    String nom_centro = botones[4].getText();
+
+                    colores[i] = centro;
+                    nombres[i] = nom_centro;
+                    colores[4] = color_1;
+                    nombres[4] = nombre_1;
+
+                    botones[4].setText(nombre_1);
+                    botones[i].setText(nom_centro);
+                }
+
+             }
         }
         esquema.layoutContainer(getContentPane()); // distribuye el panel de contenido
     }
