@@ -45,7 +45,7 @@ public class Agenda {
         ArrayPersona directorio = new ArrayPersona();
         Persona nuevaPersona;
         try{
-            agendaFile = new FileInputStream("src/agenda.txt");
+            agendaFile = new FileInputStream("C:/src/archivos/agenda.txt");
             while(true){
                 nuevaPersona = cargaAgenda();
                 if (nuevaPersona == null){
