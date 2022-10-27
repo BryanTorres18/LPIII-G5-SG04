@@ -10,7 +10,7 @@ public class TestFilePrueba {
         FileInputStream file;
         byte b[] = new byte[1024];
         try{
-            file = new FileInputStream("src/archivos/TestFile.java");
+            file = new FileInputStream("C:/src/archivos/TestFile.java");
             file.read(b);
             String s = new String(b);
             ViewFile view = new ViewFile(s);
