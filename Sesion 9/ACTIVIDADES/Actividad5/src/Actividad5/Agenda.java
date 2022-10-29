@@ -58,7 +58,7 @@ public class Agenda {
             System.out.println("No hay archivo de agenda");
         }
         catch(Exception e){
-            System.out.println("Eroor en la carga de los contactos");
+            System.out.println("Error en la carga de los contactos");
             System.exit(1);
         }
         return directorio;

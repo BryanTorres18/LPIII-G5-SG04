@@ -34,18 +34,18 @@ public class Binarios2 {
         }
         try{
             //crear el fichero de salida
-            fos = new FileOutputStream("c:/ficheros/matriz.txt");
+            fos = new FileOutputStream("c:/ficheros/matriz.dat");
             salida = new DataOutputStream(fos);
             
             //escribir el numero de filas y columnas en el fichero
             salida.writeInt(filas);
             salida.writeInt(columnas);
             
-            /*
+            
             //escribir el numero de flas y columnas en el fichero
             salida.writeInt(filas);
             salida.writeInt(columnas);
-            */
+            
             //escribir la matriz en el fichero
             for (i=0; i< filas; i++){
                 for(j = 0; j < columnas; j++){
