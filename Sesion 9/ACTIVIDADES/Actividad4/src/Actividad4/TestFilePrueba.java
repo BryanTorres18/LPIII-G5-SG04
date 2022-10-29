@@ -15,7 +15,7 @@ public class TestFilePrueba {
             String s = new String(b);
             ViewFile view = new ViewFile(s);
             view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            view.setSize(400, 150);
+            view.setSize(400, 400);
             view.setVisible(true);
         }
         catch(FileNotFoundException e){

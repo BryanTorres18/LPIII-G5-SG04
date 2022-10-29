@@ -8,7 +8,7 @@ class ViewFile extends JFrame{
     
     public ViewFile(String s){
         super("Mostrando el contenido de un archivo");
-        areaTexto = new JTextArea(s,5,40);
+        areaTexto = new JTextArea(s,100,100);
         add(areaTexto);
     }   
 }
