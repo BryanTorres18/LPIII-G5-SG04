@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class Empleado implements Serializable {
+public class Empleado  {
     private int numero;
     private String nombre;
     private double sueldo;

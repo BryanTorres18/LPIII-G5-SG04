@@ -27,7 +27,7 @@ public class Empleados extends JFrame {
 
 
     public Empleados() {
-        setTitle("Empresa de Transporte");
+        setTitle("Agenda");
         setContentPane(panel1);
         setMinimumSize(new Dimension(400, 500));
         setLocationRelativeTo(null);
@@ -40,19 +40,24 @@ public class Empleados extends JFrame {
         agregarEmpleadoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int numero = Integer.parseInt(textNumero.getText());
-                String nombre = textNombre.getText();
-                float sueldo = (Float.parseFloat(textSueldo.getText()));
+                try {
+                    int numero = Integer.parseInt(textNumero.getText());
+                    String nombre = textNombre.getText();
+                    float sueldo = (Float.parseFloat(textSueldo.getText()));
 
-                emp1.setNumero(numero);
-                emp1.setNombre(nombre);
-                emp1.setSueldo(sueldo);
+                    emp1.setNumero(numero);
+                    emp1.setNombre(nombre);
+                    emp1.setSueldo(sueldo);
 
-                agregarEmpleado(emp1);
-                textNumero.setText("");
-                textNombre.setText("");
-                textSueldo.setText("");
-                TableEmpleados.setModel(reporteEmpleado());
+                    agregarEmpleado(emp1);
+                    textNumero.setText("");
+                    textNombre.setText("");
+                    textSueldo.setText("");
+                    TableEmpleados.setModel(reporteEmpleado());
+                }catch (Exception e1){
+                    JOptionPane.showMessageDialog(null, "A ocurrido un error en: \n"+ e1.getMessage());
+                }
+
             }
         });
         textNumero.addKeyListener(new KeyAdapter() {
@@ -98,12 +103,6 @@ public class Empleados extends JFrame {
                 }
             }
         });
-    }
-
-    private void createTable(){
-        TableEmpleados.setModel(new DefaultTableModel(
-                null, nombresColumna
-        ));
     }
 
     private void agregarEmpleado(Empleado emp) {
