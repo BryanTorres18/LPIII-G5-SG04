@@ -1,81 +1,65 @@
 package Ejercicio2;
 
-import static java.awt.SystemColor.text;
+import java.awt.Color;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 
-public class main {
 
-    private static JLabel eArchivo;
-    private static JLabel eLineas;
-    private static JLabel ePalabras;
-    private static JLabel eCaracteres;
+public class main extends JFrame {
+
+    JPanel jpanel = (JPanel) this.getContentPane();
+    JLabel eArchivo = new JLabel();
+    JLabel eLineas = new JLabel();
+    JLabel ePalabras = new JLabel();
+    JLabel eCaracteres = new JLabel();
+    JLabel titulo = new JLabel();
+
+    public main(WordCount wc) {
+        
+        jpanel.setLayout(null);
+        jpanel.setBackground(Color.lightGray);
+        
+        titulo.setText("LINEAS - PALABRAS - CARACTERES");
+        titulo.setBounds(100, 15, 220, 21);
+        
+        eArchivo.setText("Nombre del Archivo: " + wc.getFichero().getName());
+        eArchivo.setBounds(5, 50, 220, 21);      
+        
+        eLineas = new JLabel("Total de lineas: " + wc.totalLineas());
+        eLineas.setBounds(5, 70, 220, 21); 
+        
+        ePalabras = new JLabel("Total de palabras: " + wc.totalPalabras());
+        ePalabras.setBounds(5, 90, 220, 21); 
+        
+        eCaracteres = new JLabel("Total de caracteres: " + wc.totalCaracteres());
+        eCaracteres.setBounds(5, 110, 220, 21); 
+        
+        jpanel.add(titulo, null);
+        jpanel.add(eArchivo, null);
+        jpanel.add(eLineas, null);
+        jpanel.add(ePalabras, null);
+        jpanel.add(eCaracteres, null);
+        
+        setSize(500, 450);
+        setTitle("Contador de Lineas, Palabras y Letras");
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
     public static void main(String[] args) throws IOException {
         //INICIADOR
-
-        
         File fichero = new File("C:/src/archivos/TestFile.txt");
-        WordCount Wc = new WordCount(fichero);
-        
-        
-        /*
-        WordCount Wc2 = new WordCount();
-        Wc2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Wc2.setSize(500, 450);
-        Wc2.setVisible(true);
-         */
- /*
-        FileInputStream file;
-        byte b[] = new byte[1024];
-        try {
-            file = new FileInputStream(fichero);
-            file.read(b);
-            String s = new String(b);
-            WordCount Wc2 = new WordCount(fichero, Wc.getContenido());
-            Wc2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            Wc2.setSize(500, 450);
-            Wc2.setVisible(true);
-            
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        if (fichero.exists()) {
+            //LLAMA AL CONSTRUCTOR DONDE INICIA EL METODO "LEER"
+            WordCount Wc = new WordCount(fichero);
+            //LUEGO LLAMARA AL CONSTRUCTOR "MAIN"
+            new main(Wc);
+        } else {
+            System.out.println("No existe el archivo");
         }
-         */
-
-        
-        System.out.println("Nombre del Archivo: " + fichero.getName());
-        System.out.println("Total Lineas : " + Wc.totalLineas());
-        System.out.println("Total Palabras : " + Wc.totalPalabras());
-        System.out.println("Total Caracteres : " + Wc.totalCaracteres());
-        
- /*
-        FileInputStream file;
-        byte b[] = new byte[1024];
-        try{
-            file = new FileInputStream(fichero);
-            file.read(b);
-            String s = new String(b);
-            WordCount view = new WordCount(s , fichero , Wc.getContenido());
-            view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            view.setSize(500, 450);
-            view.setVisible(true);
-        }
-        catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
-         */
     }
 
 }
