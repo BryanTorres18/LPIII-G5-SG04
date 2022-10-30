@@ -3,11 +3,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
-import java.time.Period;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
 
 
 public class Empleados extends JFrame {
@@ -19,12 +20,10 @@ public class Empleados extends JFrame {
     private JTable TableEmpleados;
     private int contador = 1;
 
-    DefaultTableModel model;
-
     Empleado emp1 = new Empleado();
 
     //Parametros de la tabla
-    private String[] nombresColumna = {"Orden", "Numero", "Nombre", "Sueldo"};
+    private final String[] nombresColumna = {"Orden", "Numero", "Nombre", "Sueldo"};
 
 
     public Empleados() {
@@ -38,20 +37,65 @@ public class Empleados extends JFrame {
         TableEmpleados.setModel(reporteEmpleado());
 
 
-
         agregarEmpleadoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int numero = Integer.parseInt(textNumero.getText());
                 String nombre = textNombre.getText();
-                float sueldo = Float.parseFloat(textSueldo.getText());
+                float sueldo = (Float.parseFloat(textSueldo.getText()));
 
                 emp1.setNumero(numero);
                 emp1.setNombre(nombre);
                 emp1.setSueldo(sueldo);
 
                 agregarEmpleado(emp1);
+                textNumero.setText("");
+                textNombre.setText("");
+                textSueldo.setText("");
                 TableEmpleados.setModel(reporteEmpleado());
+            }
+        });
+        textNumero.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int key = e.getKeyChar();
+
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+
+                if (textNumero.getText().trim().length() == 10) {
+                    e.consume();
+                }
+            }
+        });
+        textNombre.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int key = e.getKeyChar();
+
+                boolean mayusculas = key >= 65 && key <= 90;
+                boolean minusculas = key >= 97 && key <= 122;
+                boolean espacio = key == 32;
+
+                if (!(minusculas || mayusculas || espacio))
+                {
+                    e.consume();
+                }
+            }
+        });
+        textSueldo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char caracter = e.getKeyChar();
+                if (((caracter < '0') || (caracter > '9'))
+                        && (caracter != KeyEvent.VK_BACK_SPACE)
+                        && (caracter != '.' || textSueldo.getText().contains(".")) ) {
+                    e.consume();
+                }
             }
         });
     }
