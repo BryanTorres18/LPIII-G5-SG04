@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.Period;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 
@@ -16,9 +17,11 @@ public class Empleados extends JFrame {
     private JTextField textNombre;
     private JButton agregarEmpleadoButton;
     private JTable TableEmpleados;
-    private int contador = 0;
+    private int contador = 1;
 
     DefaultTableModel model;
+
+    Empleado emp1 = new Empleado();
 
     //Parametros de la tabla
     private String[] nombresColumna = {"Orden", "Numero", "Nombre", "Sueldo"};
@@ -31,13 +34,24 @@ public class Empleados extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        createTable();
         reporteEmpleado();
+        TableEmpleados.setModel(reporteEmpleado());
+
+
 
         agregarEmpleadoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarEmpleado();
+                int numero = Integer.parseInt(textNumero.getText());
+                String nombre = textNombre.getText();
+                float sueldo = Float.parseFloat(textSueldo.getText());
+
+                emp1.setNumero(numero);
+                emp1.setNombre(nombre);
+                emp1.setSueldo(sueldo);
+
+                agregarEmpleado(emp1);
+                TableEmpleados.setModel(reporteEmpleado());
             }
         });
     }
@@ -48,79 +62,39 @@ public class Empleados extends JFrame {
         ));
     }
 
-    private void agregarEmpleado(){
-        FileOutputStream f1 = null;
-        ObjectOutputStream salida = null;
-        Empleado emp;
-        model = (DefaultTableModel) TableEmpleados.getModel();
-        try {
-            f1 = new FileOutputStream("empleados.dat");
-            salida = new ObjectOutputStream(f1);
-
-            emp = new Empleado(Integer.parseInt(textNumero.getText()), textNombre.getText(),Double.parseDouble(textSueldo.getText()));
-            salida.writeObject(emp);
-
-            contador += 1;
-            String[] agregar = new String[4];
-            agregar[0] = (contador+"°");
-            agregar[1] = textNumero.getText();
-            agregar[2] = textNombre.getText();
-            agregar[3] = textSueldo.getText();
-            model.addRow(agregar);
-
-        }catch (FileNotFoundException e1){
+    private void agregarEmpleado(Empleado emp) {
+        try{
+            FileWriter fw = new FileWriter("Empleados.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            pw.print(contador + "°");
+            pw.print("|" + emp.getNumero());
+            pw.print("|" + emp.getNombre());
+            pw.println("|" + emp.getSueldo());
+            pw.close();
+        }catch (Exception e1){
             System.out.println(e1.getMessage());
-        }catch (IOException e1){
-            System.out.println(e1.getMessage());
-        } finally {
-            try{
-                if(f1 != null)
-                    f1.close();
-                if(salida != null)
-                    salida.close();
-            } catch (IOException e1){
-                System.out.println(e1.getMessage());
-            }
         }
     }
 
-    private void reporteEmpleado(){
-        FileInputStream f2 = null;
-        ObjectInputStream entrada = null;
-        model = (DefaultTableModel) TableEmpleados.getModel();
-        Empleado emp2;
-
+    private DefaultTableModel reporteEmpleado() {
+        DefaultTableModel model1 = new DefaultTableModel(nombresColumna, 0);
         try {
-            f2= new FileInputStream("empleados.dat");
-            entrada = new ObjectInputStream(f2);
-
-            while(true){
-                contador+= 1;
-                emp2 = (Empleado) entrada.readObject();
-                String[] agregar = new String[4];
-                agregar[0] = (contador+"°");
-                agregar[1] = (String.valueOf(emp2.getNumero()));
-                agregar[2] = (String.valueOf(emp2.getNombre()));
-                agregar[3] = (String.valueOf(emp2.getSueldo()));
-                model.addRow(agregar);
+            FileReader fr = new FileReader("Empleados.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String d;
+            while ((d = br.readLine()) != null){
+                StringTokenizer dato = new StringTokenizer(d, "|");
+                Vector x = new Vector();
+                contador += 1;
+                while(dato.hasMoreTokens()){
+                    x.addElement(dato.nextToken());
+                }
+                model1.addRow(x);
             }
-
-
-        } catch (FileNotFoundException e2){
+        }catch (Exception e2){
             System.out.println(e2.getMessage());
-        } catch (ClassNotFoundException e2){
-            System.out.println(e2.getMessage());
-        } catch (IOException e2){
-            System.out.println(e2.getMessage());
-        } finally {
-            try{
-                if(f2 != null)
-                    f2.close();
-                if(entrada != null)
-                    entrada.close();
-            } catch (IOException e2){
-                System.out.println(e2.getMessage());
-            }
         }
+        return model1;
     }
 }

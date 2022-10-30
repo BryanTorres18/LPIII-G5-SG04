@@ -11,6 +11,9 @@ public class Empleado implements Serializable {
         this.sueldo = sueldo;
     }
 
+    public Empleado() {
+    }
+
     public int getNumero() {
         return numero;
     }
