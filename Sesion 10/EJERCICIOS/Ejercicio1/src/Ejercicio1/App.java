@@ -8,7 +8,7 @@ package Ejercicio1;
 
 public class App {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         String[] Cadena={"Uno\t","Dos\t","Tres\t","Cuatro\t","Cinco\t","Seis\t","Siete\t","Ocho\t"};
         System.out.printf("Array de cadenas contiene:\n");
