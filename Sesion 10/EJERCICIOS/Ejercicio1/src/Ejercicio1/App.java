@@ -9,10 +9,11 @@ package Ejercicio1;
 public class App {
 
     public static void main(String[] args) {
-
+        Integer[] Numeros = {1,2,3,4,5,6,7,8,9,10};
         String[] Cadena={"Uno\t","Dos\t","Tres\t","Cuatro\t","Cinco\t","Seis\t","Siete\t","Ocho\t"};
         System.out.printf("Array de cadenas contiene:\n");
         imprimirArray(Cadena);
+        imprimirArray(Numeros);
 
     }
 
@@ -20,6 +21,7 @@ public class App {
         for (T elemento : inputArray) {
             System.out.printf("%s ", elemento);
         }
+        System.out.println("\n");
     }
     
     public static String imprimirArray(String[] cadena){
