@@ -1,4 +1,4 @@
-public class App <T> {
+public class App {
     public static void main(String[] args) throws Exception{
         Bag<Integer> bolsa1 = new Bag<Integer>(5);
         Bag<String> bolsa2 = new Bag<String>(2);
