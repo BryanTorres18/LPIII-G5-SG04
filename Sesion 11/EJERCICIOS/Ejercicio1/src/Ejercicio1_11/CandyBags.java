@@ -18,9 +18,7 @@ public class CandyBags<T extends Goodies> extends Bag<T> {
     }
 
     public String cheapest() {
-
         for (int i = 0; i < list.length; i++) {
-
             if (list[i].getPrice() < menor) {
                 menor = list[i].getPrice();
                 golosina = list[i].getClass().getName();
