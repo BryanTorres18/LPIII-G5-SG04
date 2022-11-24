@@ -2,118 +2,108 @@ package Ejercicio1_11;
 
 import java.util.Arrays;
 
-public class Bag<T>{
-    
-    private Goodies g;
-    public T[] list;
-    public int count;   // Contador de objetos que hay en la bolsa
+public class Bag<T> {
+    private final T[] list;
+    private int count;
 
     public Bag(int n) {
         this.list = (T[]) new Object[n];
         this.count = 0;
     }
 
-    public T[] add(T obj) throws IsFull {
-        try {
-            for (int i = 0; i < count; i++) {
-                if (list[i].equals(obj)) {
-                    System.out.println("Se repite");
-                    break;
+    public void add(T obj) throws IsFull, AlreadyInBag {
+        for (T i : list) {
+            if (i != null) {
+                if (i.equals(obj)) {
+                    throw new AlreadyInBag();
                 }
             }
+        }
+        if (this.count < list.length) {
             list[count] = obj;
             count++;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } else {
             throw new IsFull("La bolsa esta llena");
         }
-        return list;
-    }
-
-    public void setG(Goodies g) {
-        this.g = g;
-    }
-
-    public Goodies getG() {
-        return g;
-    }
-
-    public T[] getList() {
-        return list;
-    }
-
-    public void setList(T[] list) {
-        this.list = list;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public int getCount() {
-        return count;
+        return this.count;
     }
 
     public T[] getObjects() throws IsEmpty {
-        if (count == 0) {
-            throw new IsEmpty("La bolsa vacia");
+        if (count > 0) {
+            return this.list;
         } else {
-            return list;
+            throw new IsEmpty("La bolsa esta vacia");
         }
     }
 
     public T remove(T obj) throws ObjectNoExist {
-        int con = 0;
+        int cont = 0;
         for (T i : this.list) {
             if (i != null && i.equals(obj)) {
-                T devolver = list[con];
-                for (int j = con; j < list.length - 1; j++) {
+                T devolver = list[cont];
+                for (int j = cont; j < list.length - 1; j++) {
                     list[j] = list[j + 1];
                 }
                 list[list.length - 1] = null;
                 count--;
                 return devolver;
             }
-            con++;
+            cont++;
         }
-        throw new ObjectNoExist("No existe en la lista");
+        throw new ObjectNoExist("El objeto no existe");
     }
 
     public int getIndex(T obj) {
-        int devolver = -1;
-        for (int i = 0; i < list.length; i++) {
-            if (list[i] == obj) {
-                devolver = i;
+        int cont = 0;
+        for (T i : this.list) {
+            if (i.equals(obj)) {
+                return cont;
             }
+            cont++;
         }
-        return devolver;
+        return -1;
+    }
+
+    public T getObjectList(int index) {
+        return this.list[index];
     }
 
     @Override
     public String toString() {
-        return "Bag{"
-                + "list=" + Arrays.toString(list)
-                + '}';
+        return Arrays.toString(list);
     }
 
-    private static class IsEmpty extends Exception {
+    public static class IsEmpty extends Exception {
 
         public IsEmpty(String msg) {
             super(msg);
         }
     }
 
-    private static class IsFull extends Exception {
+    public static class IsFull extends Exception {
 
         public IsFull(String msg) {
             super(msg);
         }
     }
 
-    private static class ObjectNoExist extends Exception {
+    public static class ObjectNoExist extends Exception {
 
         public ObjectNoExist(String msg) {
             super(msg);
         }
     }
+
+    public static class AlreadyInBag extends Exception{
+        AlreadyInBag(){
+            super("El elemento ya esta en la bolsa");
+        }
+    }
 }
+
+
+
+

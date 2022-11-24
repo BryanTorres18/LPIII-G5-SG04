@@ -1,10 +1,10 @@
 package Ejercicio1_11;
 
-public class Goodies<T> {
+public class Goodies implements Comparable<Goodies> {
 
     private int id;
     private String description;
-    private float price;
+    private Float price;
 
     public Goodies(int id, String description, float price) {
         this.id = id;
@@ -37,6 +37,23 @@ public class Goodies<T> {
     }
 
     @Override
+    public int compareTo(Goodies a){
+        return this.price.compareTo(a.price);
+    }
+    @Override
+    public boolean equals(Object a){
+        if(a instanceof Goodies){
+            if (this.id == ((Goodies)a).id){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public String toString() {
         return "Goodies{"
                 + "id=" + id
@@ -44,4 +61,5 @@ public class Goodies<T> {
                 + ", price=" + price
                 + '}';
     }
+
 }

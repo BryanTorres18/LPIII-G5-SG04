@@ -1,54 +1,64 @@
 package Ejercicio1_11;
 
-public class CandyBags<T extends Goodies> extends Bag<T> {
+import java.util.Arrays;
 
-    private String golosina = "";
-    private float menor = 0;
-    private float mayor;
-    private Bag b;
+public class CandyBags<T extends Goodies> extends Bag<T> {
 
     public CandyBags(int n) {
         super(n);
     }
 
-    public String getGolosina() {
-        return golosina;
-    }
+    public T cheapest(){
+        try{
 
-    public float getMenor() {
-        return menor;
-    }
-
-    public float getMayor() {
-        return mayor;
-    }
-
-    public String cheapest(Bag b) {
-        for (int i = 0; i < b.list.length; i++) {
-            if (b.getG().getPrice() < menor) {
-                menor = list[i].getPrice();
-                golosina = list[i].getClass().getName();
+            int cuenta = this.getCount();
+            if (cuenta < 0){
+                throw new IsEmpty();
             }
-        }
-        return golosina;
-    }
-
-    public void mostExpensive(int x) {
-        try {
-            if (x > list.length) {
-                System.out.println("Error");
-            } else {
-                for (int i = 0; i < b.list.length; i++) {
-                    if (list[i].getPrice() > mayor) {
-                        mayor = list[i].getPrice();
-                        String a = list[i].getClass().getName();
-                        b.add(a);
-                    }
+            
+            T menor = getObjectList(0);
+            for(int i =0; i< cuenta ; i++){
+                if (menor.compareTo(getObjectList(i)) > 0){
+                    menor = getObjectList(i);
                 }
-                System.out.println(b);
             }
-        } catch (Exception e) {
+            return menor;
+        }catch (IsEmpty e){
             System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void sortBag(int a,int b) throws Bag.IsEmpty {
+        Arrays.sort(this.getObjects(),a,b);
+    }
+
+    public CandyBags<T> mostExpensive(int n){
+        try{
+            if (this.getCount()<n){
+                throw new NotEnoughItems();
+            }
+            sortBag(0,this.getCount());
+            CandyBags<T> listaDevolver = new CandyBags<>(n);
+            for(int i = this.getCount()-n; i < getCount(); i++){
+                listaDevolver.add(getObjectList(i));
+            }
+            return listaDevolver;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private static class NotEnoughItems extends Exception{
+        NotEnoughItems(){
+            super("El numero recibido excede la cantidad de elementos en la bolsa");
+        }
+    }
+
+    private static class IsEmpty extends Exception{
+        IsEmpty(){
+            super("La bolsa esta vacia!");
         }
     }
 
