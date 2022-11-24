@@ -1,25 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Ejercicio1_11;
-
-import java.util.ArrayList;
 
 public class CandyBags<T extends Goodies> extends Bag<T> {
 
-    private String golosina;
-    private ArrayList<String> lista = new ArrayList<String>();
+    private String golosina = "";
     private float menor = 0;
     private float mayor;
+    private Bag b;
 
     public CandyBags(int n) {
         super(n);
     }
 
-    public String cheapest() {
-        for (int i = 0; i < list.length; i++) {
-            if (list[i].getPrice() < menor) {
+    public String getGolosina() {
+        return golosina;
+    }
+
+    public float getMenor() {
+        return menor;
+    }
+
+    public float getMayor() {
+        return mayor;
+    }
+
+    public String cheapest(Bag b) {
+        for (int i = 0; i < b.list.length; i++) {
+            if (b.getG().getPrice() < menor) {
                 menor = list[i].getPrice();
                 golosina = list[i].getClass().getName();
             }
@@ -27,23 +33,23 @@ public class CandyBags<T extends Goodies> extends Bag<T> {
         return golosina;
     }
 
-    public ArrayList<String> mostExpensive(int x) {
+    public void mostExpensive(int x) {
         try {
             if (x > list.length) {
                 System.out.println("Error");
             } else {
-                for (int i = 0; i < list.length; i++) {
-
+                for (int i = 0; i < b.list.length; i++) {
                     if (list[i].getPrice() > mayor) {
                         mayor = list[i].getPrice();
                         String a = list[i].getClass().getName();
-                        lista.add(a);
+                        b.add(a);
                     }
                 }
+                System.out.println(b);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return lista;
     }
+
 }

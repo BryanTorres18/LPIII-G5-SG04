@@ -2,29 +2,56 @@ package Ejercicio1_11;
 
 import java.util.Arrays;
 
-public class Bag<T> {
-
+public class Bag<T>{
+    
+    private Goodies g;
     public T[] list;
-    private int count;   // Contador de objetos que hay en la bolsa
+    public int count;   // Contador de objetos que hay en la bolsa
 
     public Bag(int n) {
         this.list = (T[]) new Object[n];
         this.count = 0;
     }
 
-    public void add(T obj) throws IsFull {
+    public T[] add(T obj) throws IsFull {
         try {
             for (int i = 0; i < count; i++) {
-                if (list[i].getClass() == obj.getClass()) {
+                if (list[i].equals(obj)) {
                     System.out.println("Se repite");
+                    break;
                 }
             }
             list[count] = obj;
             count++;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw  new IsFull("La bolsa esta llena");
+            throw new IsFull("La bolsa esta llena");
         }
+        return list;
+    }
+
+    public void setG(Goodies g) {
+        this.g = g;
+    }
+
+    public Goodies getG() {
+        return g;
+    }
+
+    public T[] getList() {
+        return list;
+    }
+
+    public void setList(T[] list) {
+        this.list = list;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public T[] getObjects() throws IsEmpty {
@@ -68,8 +95,6 @@ public class Bag<T> {
                 + "list=" + Arrays.toString(list)
                 + '}';
     }
-
-    
 
     private static class IsEmpty extends Exception {
 
