@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 class conexionBD {
-
+    conexionAuthor cA;
     public String db = "ejercicio1"; //nombre de la base de datos
     public String url = "jdbc:mysql://127.0.0.1/" + db; //conexion localhost + nombre de la base de datos
     public String user = "root"; //usuario localhost

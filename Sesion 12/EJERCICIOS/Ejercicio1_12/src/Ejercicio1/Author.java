@@ -12,6 +12,9 @@ public class Author {
         this.lastname = lastname;
     }
 
+    public Author() {
+    }
+
     public int getAuthorid() {
         return authorid;
     }

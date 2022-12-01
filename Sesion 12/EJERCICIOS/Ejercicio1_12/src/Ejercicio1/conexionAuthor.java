@@ -1,46 +1,55 @@
 package Ejercicio1;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+
 
 public class conexionAuthor {
 
+    Statement st;
+    ResultSet rs;
+    Interface in;
     private conexionBD mysql = new conexionBD();
     private Connection cn = mysql.conectar();
-    private String sSQL = "";
+    
+    public void setSt(Statement st) {
+        this.st = st;
+    }
 
-    public DefaultTableModel mostrar(String buscar) {
-        DefaultTableModel modelo;
+    public void setRs(ResultSet rs) {
+        this.rs = rs;
+    }
 
-        String[] titulos = {"AUTHORID", "FIRSTNAME", "LASTNAME"};
+    public void setIn(Interface in) {
+        this.in = in;
+    }
 
-        String[] registro = new String[3]; //indices segun la variable "titulos"
+    public void setMysql(conexionBD mysql) {
+        this.mysql = mysql;
+    }
 
-        modelo = new DefaultTableModel(null, titulos);
+    public void setCn(Connection cn) {
+        this.cn = cn;
+    }
 
-        sSQL = "select * from author";
+    public Statement getSt() {
+        return st;
+    }
 
-        try {
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sSQL);
+    public ResultSet getRs() {
+        return rs;
+    }
 
-            while (rs.next()) {
-                registro[0] = rs.getString("authorid");
-                registro[1] = rs.getString("firstname");
-                registro[2] = rs.getString("lastname");
-                modelo.addRow(registro);
+    public Interface getIn() {
+        return in;
+    }
 
-            }
-            return modelo;
+    public conexionBD getMysql() {
+        return mysql;
+    }
 
-        } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
-            return null;
-        }
-
+    public Connection getCn() {
+        return cn;
     }
 }
