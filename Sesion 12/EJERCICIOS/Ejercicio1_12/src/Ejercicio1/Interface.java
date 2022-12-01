@@ -4,8 +4,14 @@
  */
 package Ejercicio1;
 
+import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,10 +23,43 @@ public class Interface extends JFrame {
     /**
      * Creates new form Interface
      */
+    Statement stm;
+    ResultSet rs;
+    Connection con;
+
     public Interface() {
         initComponents();
         this.setTitle("Displaying Query Results");
-        mostrar("");
+        try {
+            String db = "ejercicio1"; //nombre de la base de datos
+            String url = "jdbc:mysql://127.0.0.1/" + db; //conexion localhost + nombre de la base de datos
+            String user = "root"; //usuario localhost
+            String pass = ""; //contraseña localhost
+
+            java.sql.Connection link = null;
+
+            Class.forName("org.gjt.mm.mysql.Driver");
+
+            link = DriverManager.getConnection(url, user, pass);
+
+            Connection con = (Connection) link;
+            con.setAutoCommit(false);
+            Statement st = con.createStatement();
+            setSt(st);
+            setConnection(con);
+            mostraractualizar();
+
+        } catch (Exception e) {
+            mensaje(e.getMessage());
+        }
+    }
+
+    public void setSt(Statement st) {
+        stm = st;
+    }
+
+    public void setConnection(Connection cn) {
+        con = cn;
     }
 
     /**
@@ -35,8 +74,8 @@ public class Interface extends JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablalistado = new javax.swing.JTable();
         btnenviar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        filter = new javax.swing.JLabel();
+        txtaplicar = new javax.swing.JTextField();
         txtenviar = new javax.swing.JTextField();
         btnaplicar = new javax.swing.JButton();
 
@@ -64,11 +103,11 @@ public class Interface extends JFrame {
             }
         });
 
-        jLabel1.setText("Filter:");
+        filter.setText("Filter:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtaplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtaplicarActionPerformed(evt);
             }
         });
 
@@ -92,18 +131,19 @@ public class Interface extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(txtenviar, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnenviar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnaplicar)))
+                        .addGap(6, 6, 6)
+                        .addComponent(txtenviar, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnenviar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtaplicar, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(btnaplicar))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -113,14 +153,15 @@ public class Interface extends JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtenviar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnenviar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnaplicar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnaplicar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(filter)
+                        .addComponent(txtaplicar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,60 +169,173 @@ public class Interface extends JFrame {
 
     private void txtenviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtenviarActionPerformed
         // TODO add your handling code here:
+        txtenviar.transferFocus();
     }//GEN-LAST:event_txtenviarActionPerformed
 
     private void btnenviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnenviarActionPerformed
         // TODO add your handling code here:
+        this.consulta();
     }//GEN-LAST:event_btnenviarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtaplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtaplicarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        txtaplicar.transferFocus();
+    }//GEN-LAST:event_txtaplicarActionPerformed
 
     private void btnaplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaplicarActionPerformed
         // TODO add your handling code here:
+        this.filtro();
     }//GEN-LAST:event_btnaplicarActionPerformed
 
-    void mostrar(String buscar) {
+    public void mensaje(String texto) {
+        JOptionPane.showMessageDialog(null, texto);
+    }
+
+    public void mostrartabla(ResultSet rs) {
+        DefaultTableModel modelo;
+        String[] titulos = {"AUTHORID", "FIRSTNAME", "LASTNAME"};
+        String[] registro = new String[3]; //indices segun la variable "titulos"
+        modelo = new DefaultTableModel(null, titulos);
         try {
-            DefaultTableModel modelo;
-            conexionAuthor func = new conexionAuthor(); // aqui tenemos que revisar que podemos importar correctamente el fproducto.java
-            modelo = (DefaultTableModel) func.mostrar(buscar);//ya que esta funcin requiere de esa base para funcinar
-
-            tablalistado.setModel(modelo);
-
+            while (rs.next()) {
+                registro[0] = rs.getString("authorid");
+                registro[1] = rs.getString("firstname");
+                registro[2] = rs.getString("lastname");
+                modelo.addRow(registro);
+            }
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(rootPane, e);
+            mensaje(e.getMessage());
+        }
+        tablalistado.setModel(modelo);
+    }
+
+    public void mostraractualizar() {
+        DefaultTableModel modelo;
+
+        String[] titulos = {"AUTHORID", "FIRSTNAME", "LASTNAME"};
+
+        String[] registro = new String[3]; //indices segun la variable "titulos"
+
+        modelo = new DefaultTableModel(null, titulos);
+
+        try {
+            rs = stm.executeQuery("select * from author");
+            while (rs.next()) {
+                registro[0] = rs.getString("authorid");
+                registro[1] = rs.getString("firstname");
+                registro[2] = rs.getString("lastname");
+                modelo.addRow(registro);
+            }
+        } catch (Exception e) {
+            mensaje(e.getMessage());
+        }
+        tablalistado.setModel(modelo);
+    }
+
+    public void consulta() {
+        try {
+            if (leer(txtenviar) == null) {
+                mensaje("NO INGRESO CONSULTA");
+            } else {
+                switch (clausulaSQL()) {
+                    case 1:
+                        rs = stm.executeQuery(leer(txtenviar));
+                        mostrartabla(rs);
+                        break;
+                    case 2:
+                        stm.executeUpdate(leer(txtenviar));
+                        con.commit();
+                        mostraractualizar();
+                        break;
+                    case 3:
+                        mensaje("NO HAY CLAUSULA");
+                        break;
+                    case 0:
+                        mensaje("ERROR");
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            mensaje(e.getMessage());
         }
     }
+
+    public void filtro() {
+        try {
+            if (leer(txtenviar) == null) {
+                mensaje("NO INGRESO CONSULTA");
+            } else if (leer(txtaplicar) == null) {
+                mensaje("NO INGRESO FILTRO");
+            } else if (leer(txtenviar).toUpperCase().contains("WHERE")
+                    || leer(txtenviar).toUpperCase().contains("INSERT")
+                    || leer(txtaplicar).toUpperCase().contains("SELECT")
+                    || leer(txtaplicar).toUpperCase().contains("UPDATE")
+                    || leer(txtaplicar).toUpperCase().contains("DELETE")) {
+                mensaje("CLAUSULA INCORRECTA");
+            } else if (leer(txtaplicar).toUpperCase().contains("WHERE")) {
+                switch (clausulaSQL()) {
+                    case 1:
+                        rs = stm.executeQuery(leer(txtenviar) + " " + leer(txtaplicar));
+                        mostrartabla(rs);
+                        break;
+                    case 2:
+                        stm.executeUpdate(leer(txtenviar) + " " + leer(txtaplicar));
+                        con.commit();
+                        mostraractualizar();
+                        break;
+                    case 3:
+                        mensaje("NO HAY CALUSULA SQL");
+                        break;
+                    case 0:
+                        mensaje("ERROR");
+                        break;
+                }
+            } else {
+                mensaje("NO HAY 'WHERE'");
+            }
+        } catch (Exception e) {
+            mensaje(e.getMessage());
+        }
+    }
+
+    //CORROBORRAR CLAUSULA SQL DEL 1ER JTEXTFIELD 
+    public int clausulaSQL() {
+        try {
+            if (leer(txtenviar).toUpperCase().contains("SELECT")) {
+                return 1;
+            } else if (leer(txtenviar).toUpperCase().contains("UPDATE")) {
+                return 2;
+            } else if (leer(txtenviar).toUpperCase().contains("DELETE")) {
+                return 2;
+            } else if (leer(txtenviar).toUpperCase().contains("INSERT")) {
+                return 2;
+            } else {
+                return 3;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    //METODO LEER TEXTO DE LOS CAMPOS JTEXTFIELD
+    public String leer(JTextField txt) {
+        try {
+            if (txt.getText().isEmpty()) {
+                return null;
+            } else {
+                return txt.getText();
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Interface().setVisible(true);
@@ -192,10 +346,10 @@ public class Interface extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnaplicar;
     private javax.swing.JButton btnenviar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel filter;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablalistado;
+    private javax.swing.JTextField txtaplicar;
     private javax.swing.JTextField txtenviar;
     // End of variables declaration//GEN-END:variables
 }
