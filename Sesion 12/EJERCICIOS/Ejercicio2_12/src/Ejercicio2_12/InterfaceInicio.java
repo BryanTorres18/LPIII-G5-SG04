@@ -5,10 +5,13 @@
 package Ejercicio2_12;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,12 +24,23 @@ public class InterfaceInicio extends javax.swing.JFrame {
      * Creates new form InterfaceInicio
      */
     Statement stm;
-    ResultSet rs;
     Connection con;
     InterfaceMostrar iM;
+    int x = 0;
 
     public InterfaceInicio() {
         initComponents();
+        iniciador();
+    }
+
+    public void iniciador() {
+        txtid.setEnabled(false);
+        txtnombre.setEnabled(false);
+        txtapellido.setEnabled(false);
+        txtemail.setEnabled(false);
+        txtnumero.setEnabled(false);
+        mostrar("");
+        mostrar_txt("");
     }
 
     public void setSt(Statement st) {
@@ -35,6 +49,38 @@ public class InterfaceInicio extends javax.swing.JFrame {
 
     public void setConnection(Connection cn) {
         con = cn;
+    }
+
+    public void mostrar(String buscar) {
+        try {
+            DefaultTableModel modelo;
+            conexionAgenda func = new conexionAgenda();
+            modelo = (DefaultTableModel) func.mostrar(buscar);
+
+            tablalistado.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+    }
+
+    public void mostrar_txt(String buscar) {
+
+        DefaultTableModel modelo;
+        conexionAgenda func = new conexionAgenda();
+        modelo = (DefaultTableModel) func.mostrar(buscar);
+
+        tablalistado.setModel(modelo);
+
+        //conexionAgenda func = new conexionAgenda();
+        String[] Arreglo = func.mostrar_txt(buscar);
+        for (int i = 0; i < Arreglo.length; i++) {
+            txtid.setText(tablalistado.getValueAt(i, 0).toString());
+            txtnombre.setText(tablalistado.getValueAt(i, 1).toString());
+            txtapellido.setText(tablalistado.getValueAt(i, 2).toString());
+            txtemail.setText(tablalistado.getValueAt(i, 3).toString());
+            txtnumero.setText(tablalistado.getValueAt(i, 4).toString());
+        }
+
     }
 
     /**
@@ -60,7 +106,7 @@ public class InterfaceInicio extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
-        btnguardar = new javax.swing.JButton();
+        btnbuscar = new javax.swing.JButton();
         btninsertar = new javax.swing.JButton();
         btnmostrar = new javax.swing.JButton();
         txtnombre = new javax.swing.JTextField();
@@ -80,6 +126,11 @@ public class InterfaceInicio extends javax.swing.JFrame {
                 btnanteriorMouseClicked(evt);
             }
         });
+        btnanterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnanteriorActionPerformed(evt);
+            }
+        });
 
         btnsiguiente.setText("Next");
         btnsiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,12 +144,15 @@ public class InterfaceInicio extends javax.swing.JFrame {
             }
         });
 
+        primerid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        primerid.setText("0");
         primerid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 primeridActionPerformed(evt);
             }
         });
 
+        ultimoid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ultimoid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ultimoidActionPerformed(evt);
@@ -129,10 +183,10 @@ public class InterfaceInicio extends javax.swing.JFrame {
             }
         });
 
-        btnguardar.setText("Find");
-        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+        btnbuscar.setText("Find");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnguardarActionPerformed(evt);
+                btnbuscarActionPerformed(evt);
             }
         });
 
@@ -146,7 +200,7 @@ public class InterfaceInicio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnguardar)
+                .addComponent(btnbuscar)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,7 +210,7 @@ public class InterfaceInicio extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -176,6 +230,36 @@ public class InterfaceInicio extends javax.swing.JFrame {
         btnmostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnmostrarActionPerformed(evt);
+            }
+        });
+
+        txtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombreActionPerformed(evt);
+            }
+        });
+
+        txtapellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtapellidoActionPerformed(evt);
+            }
+        });
+
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtemailActionPerformed(evt);
+            }
+        });
+
+        txtid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidActionPerformed(evt);
+            }
+        });
+
+        txtnumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnumeroActionPerformed(evt);
             }
         });
 
@@ -247,10 +331,10 @@ public class InterfaceInicio extends javax.swing.JFrame {
                                         .addComponent(btninsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 58, Short.MAX_VALUE))))
+                        .addGap(0, 57, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -292,9 +376,9 @@ public class InterfaceInicio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btninsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnmostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -302,44 +386,47 @@ public class InterfaceInicio extends javax.swing.JFrame {
 
     private void primeridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeridActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_primeridActionPerformed
 
     private void ultimoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ultimoidActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_ultimoidActionPerformed
 
     private void txtbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscarActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_txtbuscarActionPerformed
 
-    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         // TODO add your handling code here:
-        //if(iM.mostrar(txtbuscar.getText()) == iM.mostrar(txtapellido.getText()) )
-        
-    }//GEN-LAST:event_btnguardarActionPerformed
+        if (txtbuscar.getText().length() == 0) {
+            JOptionPane.showConfirmDialog(rootPane, "INGRESA UN APELLIDO A BUSCAR");
+            txtbuscar.requestFocus();
+        } else {
+            mostrar_txt(txtbuscar.getText());
+        }
+        iniciador();
+
+    }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_btnsiguienteActionPerformed
 
     private void btnsiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsiguienteMouseClicked
         // TODO add your handling code here:
-        
-        String num = ultimoid.getText();
-        
-        int X =Integer.parseInt(num) + 1;  
-        
-        ultimoid.setText(String.valueOf(X).toString());
-        
-        int fila = tablalistado.rowAtPoint(evt.getPoint());
 
-        txtid.setText(tablalistado.getValueAt(fila, 0).toString());
-        txtnombre.setText(tablalistado.getValueAt(fila, 1).toString());
-        txtapellido.setText(tablalistado.getValueAt(fila, 2).toString());
-        txtemail.setText(tablalistado.getValueAt(fila, 3).toString());
-        txtnumero.setText(tablalistado.getValueAt(fila, 4).toString());
+        txtid.setText(tablalistado.getValueAt(x, 0).toString());
+        txtnombre.setText(tablalistado.getValueAt(x, 1).toString());
+        txtapellido.setText(tablalistado.getValueAt(x, 2).toString());
+        txtemail.setText(tablalistado.getValueAt(x, 3).toString());
+        txtnumero.setText(tablalistado.getValueAt(x, 4).toString());
+
+        ultimoid.setText(tablalistado.getValueAt(x, 0).toString());
+        x++;
+
     }//GEN-LAST:event_btnsiguienteMouseClicked
 
     private void btninsertarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btninsertarMouseClicked
@@ -370,20 +457,48 @@ public class InterfaceInicio extends javax.swing.JFrame {
 
     private void btnanteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnanteriorMouseClicked
         // TODO add your handling code here:
-        String num = ultimoid.getText();
-        
-        int X =Integer.parseInt(num) - 1;  
-        
-        ultimoid.setText(String.valueOf(X).toString());
-        
-        int fila = tablalistado.rowAtPoint(evt.getPoint());
-        
-        txtid.setText(tablalistado.getValueAt(fila, 0).toString());
-        txtnombre.setText(tablalistado.getValueAt(fila, 1).toString());
-        txtapellido.setText(tablalistado.getValueAt(fila, 2).toString());
-        txtemail.setText(tablalistado.getValueAt(fila, 3).toString());
-        txtnumero.setText(tablalistado.getValueAt(fila, 4).toString());
+        if (x-- > 0) {
+            txtid.setText(tablalistado.getValueAt(x, 0).toString());
+            txtnombre.setText(tablalistado.getValueAt(x, 1).toString());
+            txtapellido.setText(tablalistado.getValueAt(x, 2).toString());
+            txtemail.setText(tablalistado.getValueAt(x, 3).toString());
+            txtnumero.setText(tablalistado.getValueAt(x, 4).toString());
+
+            ultimoid.setText(tablalistado.getValueAt(x, 0).toString());
+        } else {
+            JOptionPane.showConfirmDialog(rootPane, "NO HAY MAS REGISTROS");
+            x = 0;
+        }
     }//GEN-LAST:event_btnanteriorMouseClicked
+
+    private void btnanteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnanteriorActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnanteriorActionPerformed
+
+    private void txtidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtidActionPerformed
+
+    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
+        // TODO add your handling code here:
+        txtnombre.transferFocus();
+    }//GEN-LAST:event_txtnombreActionPerformed
+
+    private void txtapellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtapellidoActionPerformed
+        // TODO add your handling code here:
+        txtapellido.transferFocus();
+    }//GEN-LAST:event_txtapellidoActionPerformed
+
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
+        // TODO add your handling code here:
+        txtemail.transferFocus();
+    }//GEN-LAST:event_txtemailActionPerformed
+
+    private void txtnumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnumeroActionPerformed
+        // TODO add your handling code here:
+        txtnumero.transferFocus();
+    }//GEN-LAST:event_txtnumeroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -423,7 +538,7 @@ public class InterfaceInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnanterior;
-    private javax.swing.JButton btnguardar;
+    private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btninsertar;
     private javax.swing.JButton btnmostrar;
     private javax.swing.JButton btnsiguiente;

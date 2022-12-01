@@ -8,21 +8,23 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class conexionAgenda {
+
     private conexionBD mysql = new conexionBD();
     private Connection cn = mysql.conectar();
     private String sSQL = "";
-    private String sSQL2 = "";
     public Integer totalregistros;
 
-    public DefaultTableModel mostrartabla(String buscar) {
+    public DefaultTableModel mostrar(String buscar) {
         DefaultTableModel modelo;
         String[] titulos = {"ID", "NOMBRE", "APELLIDOS", "EMAIL", "TELEFONO"};
         String[] registro = new String[5]; //indices segun la variable "titulos"
         modelo = new DefaultTableModel(null, titulos);
+
+        sSQL = "select * from agenda where lastname like '%" + buscar + "%'";
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("select * from agenda");
-            
+            ResultSet rs = st.executeQuery(sSQL);
+
             while (rs.next()) {
                 registro[0] = rs.getString("id");
                 registro[1] = rs.getString("firstname");
@@ -31,12 +33,36 @@ public class conexionAgenda {
                 registro[4] = rs.getString("phone");
                 modelo.addRow(registro);
             }
+            return modelo;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
+            return null;
         }
-        return modelo;
     }
-    
+
+    public String[] mostrar_txt(String buscar) {
+
+        String[] registro = new String[5];
+        
+        sSQL = "select * from agenda where lastname like '%" + buscar + "%'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sSQL);
+
+            while (rs.next()) {
+                registro[0] = rs.getString("id");
+                registro[1] = rs.getString("firstname");
+                registro[2] = rs.getString("lastname");
+                registro[3] = rs.getString("email");
+                registro[4] = rs.getString("phone");
+            }
+            return registro;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }
+    }
+
     public boolean insertar(claseAgenda dts) {
         sSQL = "insert into agenda (firstname,lastname,email,phone)"
                 + "values (?,?,?,?)";       //se inserta en agenda, base de datos
@@ -58,4 +84,5 @@ public class conexionAgenda {
             return false;
         }
     }
+
 }

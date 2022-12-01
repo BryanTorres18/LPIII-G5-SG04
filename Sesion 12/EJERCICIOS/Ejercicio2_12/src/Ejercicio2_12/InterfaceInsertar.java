@@ -17,6 +17,7 @@ public class InterfaceInsertar extends javax.swing.JFrame {
      */
     public InterfaceInsertar() {
         initComponents();
+        txtid1.setVisible(false);
     }
 
     /**
